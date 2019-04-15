@@ -16,6 +16,7 @@ Sentiment140 - A Twitter Sentiment Analysis Tool: http://help.sentiment140.com/f
 ## TODO
 - [ ] Character Level CNN은 Dataset이 클 경우 좋은 결과를 보여주므로 Big Dataset으로 교체하여 실험
 - [ ] Jupyter code를 py code 형식으로 변환
+- [ ] Save and Load 구현
 
 ## Reference
 [Character-level Convolutional Networks for Text Classification](https://papers.nips.cc/paper/5782-character-level-convolutional-networks-for-text-classification.pdf)<br>
