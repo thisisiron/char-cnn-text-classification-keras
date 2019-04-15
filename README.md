@@ -4,8 +4,12 @@
 - PPT material: https://docs.google.com/presentation/d/1OpFnpL0BZkKadWoRvxkUbVPeHXSj8tpnpOchfNCv8hQ/edit?usp=sharing
 
 ## Data
+### Data Details
 kaggle data: https://www.kaggle.com/c/word2vec-nlp-tutorial<br>
 Sentiment140 - A Twitter Sentiment Analysis Tool: http://help.sentiment140.com/for-students/
+
+### Data Download
+[Sentiment140](http://cs.stanford.edu/people/alecmgo/trainingandtestdata.zip)
 
 ## Compare
 |                       | CharCNN | CNN Sentence |
