@@ -3,6 +3,15 @@
 - Summarization: https://thisisiron.github.io/nlp/Char-level-CNN/
 - PPT material: https://docs.google.com/presentation/d/1OpFnpL0BZkKadWoRvxkUbVPeHXSj8tpnpOchfNCv8hQ/edit?usp=sharing
 
+## Requirements
+- Python 3
+- Tensorflow 1.12
+
+## Training
+```
+python train.py
+```
+
 ## Data
 ### Data Details
 kaggle data: https://www.kaggle.com/c/word2vec-nlp-tutorial<br>
@@ -11,11 +20,17 @@ Sentiment140 - A Twitter Sentiment Analysis Tool: http://help.sentiment140.com/f
 ### Data Download
 [Sentiment140](http://cs.stanford.edu/people/alecmgo/trainingandtestdata.zip)
 
-## Compare
-|                       | CharCNN | CNN Sentence |
-|-----------------------|---------|--------------|
-| Kaggle Data Test set  | 51%     | 83%          |
-| Sentiment140 Test set | --%     | --%          |
+## Experiment
+|                       | CharCNN | improved CharCNN | CNN Sentence |
+|-----------------------|---------|------------------|--------------|
+| Kaggle Data Test set  | 51%     | --%              | 83%          |
+| Sentiment140 Test set | --%     | --%              | --%          |
+
+**CharCNN**
+- optimizer: SGD
+- alphabet: 
+
+**improved CharCNN**
 
 ## TODO
 - [ ] Character Level CNN은 Dataset이 클 경우 좋은 결과를 보여주므로 Big Dataset으로 교체하여 실험
