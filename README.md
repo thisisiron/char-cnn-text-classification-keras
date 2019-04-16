@@ -14,27 +14,30 @@ python train.py
 
 ## Data
 ### Data Details
-kaggle data: https://www.kaggle.com/c/word2vec-nlp-tutorial<br>
+~~kaggle data: https://www.kaggle.com/c/word2vec-nlp-tutorial~~<br>
 Sentiment140 - A Twitter Sentiment Analysis Tool: http://help.sentiment140.com/for-students/
 
 ### Data Download
 [Sentiment140](http://cs.stanford.edu/people/alecmgo/trainingandtestdata.zip)
 
 ## Experiment
-|                       | CharCNN | improved CharCNN | CNN Sentence |
-|-----------------------|---------|------------------|--------------|
-| Kaggle Data Test set  | 51%     | --%              | 83%          |
-| Sentiment140 Test set | --%     | --%              | --%          |
+|                       | paper CharCNN | improved CharCNN | CNN Sentence |
+|-----------------------|---------------|------------------|--------------|
+| Sentiment140 Test set | --%           | --%              | --%          |
 
 **CharCNN**
 - optimizer: SGD
-- alphabet: 
+- alphabet: abcdefghijklmnopqrstuvwxyz0123456789,;.!?:'\"/\\|_@#$%^&*~`+-=<>()[]{}
+- embedding size: 69 (the number of alphabet)
 
 **improved CharCNN**
+- optimizer: Adam
+- alphabet: all characters in a dataset
+- embedding size: free
 
 ## TODO
-- [ ] Character Level CNN은 Dataset이 클 경우 좋은 결과를 보여주므로 Big Dataset으로 교체하여 실험
-- [ ] Jupyter code를 py code 형식으로 변환
+- [X] Character Level CNN은 Dataset이 클 경우 좋은 결과를 보여주므로 Big Dataset으로 교체하여 실험
+- [X] Jupyter code를 py code 형식으로 변환
 - [ ] Save and Load 구현
 
 ## Reference
