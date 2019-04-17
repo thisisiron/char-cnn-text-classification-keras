@@ -23,7 +23,7 @@ Sentiment140 - A Twitter Sentiment Analysis Tool: http://help.sentiment140.com/f
 ## Experiment
 |                       | paper CharCNN | improved CharCNN | CNN Sentence |
 |-----------------------|---------------|------------------|--------------|
-| Sentiment140 Test set | --%           | --%              | --%          |
+| Sentiment140 Test set | --%           | 82%              | --%          |
 
 **CharCNN**
 - optimizer: SGD
