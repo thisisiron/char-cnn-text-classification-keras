@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 import os
 import tensorflow as tf
@@ -35,8 +37,13 @@ def main():
                                                                            FLAGS.dev_sample_percentage,
                                                                            FLAGS.max_len,) 
 
+    if FLAGS.model=='improved':
+        optimizer = tf.keras.optimizers.Adam()
+    elif FLAGS.model=='paper':
+        optimizer = tf.keras.optimizers.SGD()
+
     char_cnn = CharCNN(tokenizer, len(train_label[0]), FLAGS.model, FLAGS.dropout_prob)
-    char_cnn.compile(optimizer=tf.keras.optimizers.Adam(),
+    char_cnn.compile(optimizer=optimizer,
                   loss=tf.keras.losses.categorical_crossentropy,
                   metrics=['accuracy'])
 
@@ -51,7 +58,7 @@ def main():
     callbacks_list = [checkpoint]
 
     char_cnn.fit(train_data, train_label, batch_size=FLAGS.batch_size, epochs=FLAGS.num_epochs,
-                 validation_data=(val_data,val_label), callbacks=callbacks_list, shuffle=False)
+                 validation_data=(val_data,val_label), callbacks=callbacks_list, shuffle=True)
 
 
 if __name__=="__main__":

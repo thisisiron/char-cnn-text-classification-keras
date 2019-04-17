@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 import numpy as np
 import tensorflow as tf
@@ -39,13 +41,15 @@ class Embedder(tf.keras.Model):
         return embedding_weights
 
 class CharCNN(tf.keras.Model):
-    def __init__(self, tokenizer, num_of_classes, model, dropout_prob=1, max_len=1014):
+    def __init__(self, tokenizer, num_of_classes, model, dropout_prob=0.5, max_len=1014):
         super(CharCNN, self).__init__()
         self.num_of_classes = num_of_classes
-        embedding_dim = 128 
+        embedding_dim = 200 
 
         # Embedding
         self.embedder = Embedder(tokenizer, embedding_dim, max_len, model)
+
+        print(tokenizer.word_index)
 
         # Convolutional Layer
 
@@ -120,14 +124,14 @@ class CharCNN(tf.keras.Model):
 
 
 def main():
-    train_data, val_data, train_label, val_label, tokenizer = load_dataset() 
+    train_data, val_data, train_label, val_label, tokenizer = load_dataset(model='paper') 
     print('train_data[0]', len(train_label[0]))
-    char_cnn = CharCNN(tokenizer, len(train_label[0]))
+    char_cnn = CharCNN(tokenizer, len(train_label[0]), 'paper')
     char_cnn.compile(optimizer=tf.keras.optimizers.Adam(),
                   loss=tf.keras.losses.categorical_crossentropy,
                   metrics=['accuracy'])
 
-    char_cnn.fit(train_data, train_label, shuffle=False, batch_size=256, epochs=5)
+    char_cnn.fit(train_data, train_label, batch_size=256, epochs=5, validation_data=(val_data,val_label))
 
 if __name__ == "__main__":
     main()
