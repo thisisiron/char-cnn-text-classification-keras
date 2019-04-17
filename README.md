@@ -26,9 +26,9 @@ Sentiment140 - A Twitter Sentiment Analysis Tool: http://help.sentiment140.com/f
 [Sentiment140](http://cs.stanford.edu/people/alecmgo/trainingandtestdata.zip)
 
 ## Experiment
-|         | Train Set ACC | Validation Set ACC | Test Set ACC |
-|---------|---------------|--------------------|----------------|
-| CharCNN | 86%           | 82%                | --%            |
+|         | Train Set ACC    | Validation Set ACC    | Test Set ACC |
+|---------|------------------|-----------------------|----------------|
+| CharCNN | 86.86%           | 82.21%                | --%            |
 
 **CharCNN**
 - optimizer: SGD (Adam)
