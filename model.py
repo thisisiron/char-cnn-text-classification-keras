@@ -10,21 +10,15 @@ from data_loader import load_dataset
 
 
 class Embedder(tf.keras.Model):
-    def __init__(self, tokenizer, embedding_dim, max_len, model):
+    def __init__(self, tokenizer, max_len):
         super(Embedder, self).__init__()
         self.characters_size = len(tokenizer.word_index)
-
-        if model=='improved':
-            self.embedding_layer = Embedding(self.characters_size + 1,
-                                             embedding_dim,
-                                             input_length=max_len)
-        elif model=='paper':
-            embedding_weights = self._get_embedding_weights(tokenizer)
-            embedding_dim = len(tokenizer.word_index)
-            self.embedding_layer = Embedding(self.characters_size + 1,
-                                             embedding_dim,
-                                             input_length=max_len,
-                                             weights=[embedding_weights])
+        embedding_weights = self._get_embedding_weights(tokenizer)
+        embedding_dim = len(tokenizer.word_index)
+        self.embedding_layer = Embedding(self.characters_size + 1,
+                                         embedding_dim,
+                                         input_length=max_len,
+                                         weights=[embedding_weights])
 
     def call(self, input_tensor):
         x = self.embedding_layer(input_tensor)
@@ -41,13 +35,13 @@ class Embedder(tf.keras.Model):
         return embedding_weights
 
 class CharCNN(tf.keras.Model):
-    def __init__(self, tokenizer, num_of_classes, model, dropout_prob=0.5, max_len=1014):
+    def __init__(self, tokenizer, num_of_classes, dropout_prob=0.5, max_len=1014):
         super(CharCNN, self).__init__()
         self.num_of_classes = num_of_classes
         embedding_dim = 200 
 
         # Embedding
-        self.embedder = Embedder(tokenizer, embedding_dim, max_len, model)
+        self.embedder = Embedder(tokenizer, max_len)
 
         print(tokenizer.word_index)
 
@@ -122,16 +116,34 @@ class CharCNN(tf.keras.Model):
         shape[-1] = self.num_of_classes
         return tf.TensorShape(shape)
 
+def create_model(tokenizer, num_of_classes, dropout_prob):
+    char_cnn = CharCNN(tokenizer, num_of_classes, dropout_prob)
+    inputs = Input(shape=(1014,), name='input')
+    outputs = char_cnn(inputs)
+
+    return Model(inputs=inputs, outputs=outputs)
 
 def main():
-    train_data, val_data, train_label, val_label, tokenizer = load_dataset(model='paper') 
+    train_data, val_data, train_label, val_label, tokenizer = load_dataset() 
     print('train_data[0]', len(train_label[0]))
-    char_cnn = CharCNN(tokenizer, len(train_label[0]), 'paper')
-    char_cnn.compile(optimizer=tf.keras.optimizers.Adam(),
+    char_cnn = CharCNN(tokenizer, len(train_label[0]))
+
+    inputs = Input(shape=(1014,), name='input')
+    outputs = char_cnn(inputs)
+
+    model = Model(inputs=inputs, outputs=outputs)
+
+    model.compile(optimizer=tf.keras.optimizers.Adam(),
                   loss=tf.keras.losses.categorical_crossentropy,
                   metrics=['accuracy'])
+    model.fit(train_data, train_label, batch_size=256, epochs=5, validation_data=(val_data,val_label))
 
-    char_cnn.fit(train_data, train_label, batch_size=256, epochs=5, validation_data=(val_data,val_label))
+
+#    char_cnn.compile(optimizer=tf.keras.optimizers.Adam(),
+#                  loss=tf.keras.losses.categorical_crossentropy,
+#                  metrics=['accuracy'])
+#
+#    char_cnn.fit(train_data, train_label, batch_size=256, epochs=5, validation_data=(val_data,val_label))
 
 if __name__ == "__main__":
     main()
