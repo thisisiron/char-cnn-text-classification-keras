@@ -38,7 +38,6 @@ class CharCNN(tf.keras.Model):
     def __init__(self, tokenizer, num_of_classes, dropout_prob=0.5, max_len=1014):
         super(CharCNN, self).__init__()
         self.num_of_classes = num_of_classes
-        embedding_dim = 200 
 
         # Embedding
         self.embedder = Embedder(tokenizer, max_len)
@@ -116,9 +115,9 @@ class CharCNN(tf.keras.Model):
         shape[-1] = self.num_of_classes
         return tf.TensorShape(shape)
 
-def create_model(tokenizer, num_of_classes, dropout_prob):
-    char_cnn = CharCNN(tokenizer, num_of_classes, dropout_prob)
-    inputs = Input(shape=(1014,), name='input')
+def create_model(tokenizer, num_of_classes, dropout_prob, max_len):
+    char_cnn = CharCNN(tokenizer, num_of_classes, dropout_prob, max_len)
+    inputs = Input(shape=(max_len,), name='input')
     outputs = char_cnn(inputs)
 
     return Model(inputs=inputs, outputs=outputs)

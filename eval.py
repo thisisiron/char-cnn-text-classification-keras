@@ -12,6 +12,8 @@ from datetime import datetime, timedelta
 from data_loader import load_dataset
 from model import CharCNN, create_model 
 
+MAX_LEN = 1014
+
 flags = tf.flags
 FLAGS = flags.FLAGS
 
@@ -26,9 +28,9 @@ def test():
         optimizer = tf.keras.optimizers.SGD()
 
 
-    test_data, test_label, tokenizer = load_dataset('test')
+    test_data, test_label, tokenizer = load_dataset('test', max_len=MAX_LEN)
 
-    char_cnn = create_model(tokenizer, len(test_label[0]), 0)
+    char_cnn = create_model(tokenizer, len(test_label[0]), 0, max_len=MAX_LEN)
 
     if os.path.isfile(FLAGS.weights_path): 
         #char_cnn = load_model(FLAGS.weights_path)

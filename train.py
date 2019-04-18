@@ -37,7 +37,7 @@ def save():
         os.mkdir(MODEL_SAVE_FOLDER_PATH)
 
     filepath = MODEL_SAVE_FOLDER_PATH + "{epoch:02d}-{loss:.4f}.h5"
-    checkpoint = ModelCheckpoint(filepath, verbose=1, save_best_only=True, mode='min', save_weights_only=True)
+    checkpoint = ModelCheckpoint(filepath, verbose=1, mode='min', save_weights_only=True)
     return checkpoint
 
 
@@ -54,7 +54,7 @@ def main():
 
 #    char_cnn = CharCNN(tokenizer, len(train_label[0]),  FLAGS.dropout_prob)
 
-    char_cnn = create_model(tokenizer, len(train_label[0]), FLAGS.dropout_prob)
+    char_cnn = create_model(tokenizer, len(train_label[0]), FLAGS.dropout_prob, FLAGS.max_len)
     
     char_cnn.compile(optimizer=optimizer,
                   loss=tf.keras.losses.categorical_crossentropy,

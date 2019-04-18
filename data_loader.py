@@ -31,7 +31,7 @@ def preprocess(contexts, max_len, tokenizer=None):
     
     print(tk.word_index)
 
-    alphabet = "abcdefghijklmnopqrstuvwxyz0123456789,;.!?:'\"/\\|_@#$%^&*~`+-=<>()[]{}"
+    alphabet = "abcdefghijklmnopqrstuvwxyz0123456789,.:;!?'\"/\\|_@#$%^&*~`+-=<>()[]{}"
     char_dict = {}
     for i, char in enumerate(alphabet):
             char_dict[char] = i + 1
@@ -41,7 +41,6 @@ def preprocess(contexts, max_len, tokenizer=None):
     sequence = tk.texts_to_sequences(contexts)
     sequence_pad = pad_sequences(sequence, maxlen=max_len, padding='post')
     data = np.array(sequence_pad, dtype='float32')
-
 
     print(data[0:5])
     print(contexts.head())
@@ -98,7 +97,7 @@ def load_dataset(mode='train', valid_split=0.1, max_len=1014):
 
 
 def main():
-    load_dataset()
+    load_dataset('test')
 
 if __name__ == "__main__":
     main()
